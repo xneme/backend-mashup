@@ -1,0 +1,27 @@
+version: '3.5'
+
+services:
+  nodejs:
+    build:
+      context: ./node-js/
+      dockerfile: ./Dockerfile
+    image: xneme/backend-mashup-nodejs
+    depends_on:
+      - database
+    environment:
+      - DATABASE_URL=postgres://mashup:password@database:5432/mashup
+    ports:
+      - 3001:3000
+    container_name: backend-mashup-nodejs
+  database:
+    image: postgres:14.3
+    environment:
+      - PGDATA=/data
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pg_data:/data
+    container_name: backend-mashup-database
+
+volumes:
+  pg_data:
