@@ -13,6 +13,33 @@ services:
     ports:
       - 3001:3000
     container_name: backend-mashup-nodejs
+  
+  rust:
+    build:
+      context: ./rust/
+      dockerfile: ./Dockerfile
+    image: xneme/backend-mashup-rust
+    depends_on:
+      - database
+    environment:
+      - DATABASE_URL=postgres://mashup:password@database:5432/mashup
+    ports:
+      - 3002:3000
+    container_name: backend-mashup-rust
+  
+  rust-poem:
+    build:
+      context: ./rust-poem/
+      dockerfile: ./Dockerfile
+    image: xneme/backend-mashup-rust-poem
+    depends_on:
+      - database
+    environment:
+      - DATABASE_URL=postgres://mashup:password@database:5432/mashup
+    ports:
+      - 3002:3000
+    container_name: backend-mashup-rust-poem
+  
   database:
     image: postgres:14.3
     environment:
@@ -21,6 +48,8 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - pg_data:/data
+    ports:
+      - 5432:5432
     container_name: backend-mashup-database
 
 volumes:
