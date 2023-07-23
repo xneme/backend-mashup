@@ -8,7 +8,7 @@ use poem::{
     Result, Route, Server,
 };
 use poem_openapi::{
-    payload::{Json, PlainText},
+    payload::{Json},
     Object, OpenApi, OpenApiService,
 };
 
@@ -31,13 +31,12 @@ impl UsersApi {
     async fn create(
         &self,
         pool: Data<&PgPool>,
-        name: PlainText<String>,
-        email: PlainText<String>
+        user: Json<User>,
     ) -> Result<Json<u64>> {
         let row = sqlx::query!(
 	        "insert into users (name, email) values ($1, $2)",
-            name.0,
-            email.0
+            user.name,
+            user.email
 		)
             
 		.execute(pool.0)
