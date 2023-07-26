@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class UserController {
 
     @Autowired

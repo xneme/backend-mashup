@@ -64,13 +64,26 @@ services:
     depends_on:
       - database
     environment:
-      #      - SPRING_DATASOURCE_URL=jdbc:postgresql://mashup:password@database:5432/mashup
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/mashup
       - SPRING_DATASOURCE_USERNAME=mashup
       - SPRING_DATASOURCE_PASSWORD=password
     ports:
       - 3005:8080
     container_name: backend-mashup-java-spring
+
+  go-fiber:
+    build:
+      context: ./go-fiber
+      dockerfile: ./Dockerfile
+    command: go run cmd/main.go cmd/routes.go -b 0.0.0.0
+    image: xneme/backend-mashup-go-fiber
+    depends_on:
+      - database
+    environment:
+      - DB_DSN=host=database user=mashup password=password port=5432 sslmode=disable TimeZone=Europe/Helsinki
+    ports:
+      - 3006:3000
+    container_name: backend-mashup-go-fiber
 
   database:
     image: postgres:14.3
