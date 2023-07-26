@@ -56,6 +56,22 @@ services:
       - 3004:5000
     container_name: backend-mashup-python-flask
 
+  java-spring:
+    build: 
+      context: ./java-spring
+      dockerfile: ./Dockerfile
+    image: xneme/backend-mashup-java-spring
+    depends_on:
+      - database
+    environment:
+      #      - SPRING_DATASOURCE_URL=jdbc:postgresql://mashup:password@database:5432/mashup
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/mashup
+      - SPRING_DATASOURCE_USERNAME=mashup
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - 3005:8080
+    container_name: backend-mashup-java-spring
+
   database:
     image: postgres:14.3
     environment:
