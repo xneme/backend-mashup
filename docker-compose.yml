@@ -85,6 +85,19 @@ services:
       - 3006:3000
     container_name: backend-mashup-go-fiber
 
+  haskell-scotty:
+    build:
+      context: ./haskell-scotty
+      dockerfile: ./Dockerfile
+    image: xneme/backend-mashup-haskell-scotty
+    depends_on:
+      - database
+    environment:
+      - DB_DSN=host=database user=mashup password=password port=5432 sslmode=disable TimeZone=Europe/Helsinki
+    ports:
+      - 3007:3000
+    container_name: backend-mashup-haskell-scotty
+  
   database:
     image: postgres:14.3
     environment:
