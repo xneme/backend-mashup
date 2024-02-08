@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.9)
+project(backend_mashup_cpp_pistache)
+set(CMAKE_CXX_STANDARD 17)
+set(SOURCE_FILES main.cpp)
+find_package(PkgConfig)
+pkg_check_modules(Pistache REQUIRED IMPORTED_TARGET libpistache)
+add_executable(server_run ${SOURCE_FILES})
+target_link_libraries(server_run PkgConfig::Pistache)

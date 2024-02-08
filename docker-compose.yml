@@ -92,11 +92,22 @@ services:
     image: xneme/backend-mashup-haskell-scotty
     depends_on:
       - database
-    environment:
-      - DB_DSN=host=database user=mashup password=password port=5432 sslmode=disable TimeZone=Europe/Helsinki
     ports:
       - 3007:3000
     container_name: backend-mashup-haskell-scotty
+  
+  cpp-pistache:
+    build:
+      context: ./cpp-pistache
+      dockerfile: ./Dockerfile
+    image: xneme/backend-mashup-cpp-pistache
+    depends_on:
+      - database
+    environment:
+      - DB_DSN=host=database user=mashup password=password port=5432 sslmode=disable TimeZone=Europe/Helsinki
+    ports:
+      - 3008:3000
+    container_name: backend-mashup-cpp-pistache
   
   database:
     image: postgres:14.3

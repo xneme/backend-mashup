@@ -37,6 +37,9 @@ ghc-options:
 - -Wmissing-home-modules
 - -Wpartial-fields
 - -Wredundant-constraints
+- -O2
+- -static
+- -threaded
 
 library:
   source-dirs: src
@@ -49,6 +52,9 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    - -static
+    - -O2
+    - -threaded
     dependencies:
     - haskell-scotty
 
